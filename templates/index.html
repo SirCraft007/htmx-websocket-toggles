@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FastAPI LED Control</title>
+    <script
+      src="https://unpkg.com/htmx.org@1.6.0"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/htmx-ext-ws@2.0.1/ws.js"></script>
+  </head>
+  <body>
+    <h1>FastAPI LED Control</h1>
+    <div hx-ws="connect:/toggle">
+      <button
+        id="toggle-btn"
+        name="on"
+        hx-swap="outerHTML "
+        hx-ws="send:submit"
+      >
+        Turn LED {{"ON" if led_state else "OFF"}}
+      </button>
+    </div>
+    <div hx-ws="connect:/ws">
+      <label for="toggle-cbox">LED State:</label>
+
+      <input
+        id="toggle-cbox"
+        name="toggle"
+        type="checkbox"
+        hx-ws="send:submit"
+        hx-swap="outerHTML"
+        {%
+        if
+        led_state
+        %}
+        checked
+        {%
+        endif
+        %}
+      />
+    </div>
+  </body>
+</html>
